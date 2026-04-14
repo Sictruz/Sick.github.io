@@ -6,12 +6,6 @@ body {
   margin: 0;
 }
 
-h1 {
-  background: #0f141a;
-  padding: 20px;
-  margin: 0;
-}
-
 .container {
   max-width: 500px;
   margin: 40px auto;
@@ -21,25 +15,26 @@ h1 {
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.input-area {
-  display: flex;
-  gap: 10px;
-  margin: 15px 0;
+input {
+  background: none;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #3A7AFE;
+  outline: none;
+  color: white;
+}
+
+input::placeholder {
+  color: #aaa;
 }
 
 #tarefa {
   flex: 1;
 }
 
-input {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-}
-
 #tarefa:focus {
-  box-shadow: 0 0 0 2px #5c64ca;
+  border-color: #5c64ca;
+  box-shadow: 0 0 0 2px rgba(92, 100, 202, 0.3);
 }
 
 #titulo {
@@ -56,16 +51,36 @@ input {
 
 button {
   padding: 10px 15px;
-  border: none;
   border-radius: 8px;
-  background: #3A7AFE;
-  color: white;
+  background: transparent;
+  border: 1px solid #3A7AFE;
+  color: #3A7AFE;
   cursor: pointer;
   transition: 0.2s;
 }
 
 button:hover {
+  color: white;
   background: #2f63cc;
+  transform: scale(1.05);
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.periodos {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.periodos button.ativo {
+  background: #3A7AFE;
+  color: white;
+  box-shadow: 0 0 10px rgba(58, 122, 254, 0.5);
   transform: scale(1.05);
 }
 
@@ -74,13 +89,12 @@ li {
   align-items: center;
   gap: 10px;
   margin: 10px;
-
+  padding-left: 10px;
   opacity: 0;
   transform: translateY(10px);
   animation: aparecer 0.3s ease forwards;
-
-  transition: opacity 0.3s, transform 0.3s; /* IMPORTANTE */
 }
+
 @keyframes aparecer {
   to {
     opacity: 1;
@@ -89,6 +103,44 @@ li {
 }
 
 input[type="checkbox"] {
-  transform: scale(1.2);
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #3A7AFE;
+  border-radius: 4px;
   cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background: #3A7AFE;
+}
+
+input[type="checkbox"]:checked::after {
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: -2px;
+  left: 2px;
+}
+
+li.checked span {
+  text-decoration: line-through;
+  opacity: 0.6;
+  color: red;
+}
+
+li[data-periodo="manha"] {
+  border-left: 4px solid #FFD93D;
+  color: #FFD93D;
+}
+
+li[data-periodo="tarde"] {
+  border-left: 4px solid #FF8C42;
+  color: #FF8C42;
+}
+
+li[data-periodo="noite"] {
+  border-left: 4px solid #6C63FF;
+  color: #6C63FF;
 }
