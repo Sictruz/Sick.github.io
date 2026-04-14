@@ -44,4 +44,25 @@ window.limpar = function () {
   lista.innerHTML = "";
 };
 
+window.copiarLista = function () {
+  let itens = document.querySelectorAll("#lista li");
+
+  let textoFinal = "";
+
+  itens.forEach((item, index) => {
+    let texto = item.querySelector("span").textContent;
+    let checkbox = item.querySelector("input");
+
+    if (checkbox.checked) {
+      textoFinal += `${index + 1}. ~${texto}~\n`;
+    } else {
+      textoFinal += `${index + 1}. ${texto}\n`;
+    }
+  });
+
+  navigator.clipboard.writeText(textoFinal)
+    .then(() => alert("Lista copiada!"))
+    .catch(() => alert("Erro ao copiar."));
+};
+
 });
