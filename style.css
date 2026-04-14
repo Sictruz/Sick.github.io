@@ -1,0 +1,94 @@
+body {
+  font-family: Arial;
+  background: #161A20;
+  color: white;
+  text-align: center;
+  margin: 0;
+}
+
+h1 {
+  background: #0f141a;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #1E232B;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+#tarefa {
+  flex: 1;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+#tarefa:focus {
+  box-shadow: 0 0 0 2px #5c64ca;
+}
+
+#titulo {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #333;
+  outline: none;
+  color: white;
+  font-size: 22px;
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #3A7AFE;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #2f63cc;
+  transform: scale(1.05);
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+
+  opacity: 0;
+  transform: translateY(10px);
+  animation: aparecer 0.3s ease forwards;
+
+  transition: opacity 0.3s, transform 0.3s; /* IMPORTANTE */
+}
+@keyframes aparecer {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
