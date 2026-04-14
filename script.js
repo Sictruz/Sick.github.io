@@ -1,68 +1,70 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-  let input = document.getElementById("tarefa");
-  let lista = document.getElementById("lista");
+  const input = document.getElementById("tarefa");
+  const lista = document.getElementById("lista");
 
-  // ENTER adiciona tarefa
-  input.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
+  let periodoSelecionado = "";
+
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
       adicionar();
     }
   });
 
-  window.adicionar = function () {
-    if (input.value.trim() === "") return;
+  const selecionarBotao = (btn, periodo) => {
+    periodoSelecionado = periodo;
+    document.querySelectorAll(".periodos button")
+      .forEach(b => b.classList.remove("ativo"));
+    btn.classList.add("ativo");
+  };
 
-    let li = document.createElement("li");
+  window.manha = btn => selecionarBotao(btn, "manha");
+  window.tarde = btn => selecionarBotao(btn, "tarde");
+  window.noite = btn => selecionarBotao(btn, "noite");
 
-    let checkbox = document.createElement("input");
+  window.adicionar = () => {
+    if (!input.value.trim()) return;
+
+    const li = document.createElement("li");
+    li.setAttribute("data-periodo", periodoSelecionado);
+
+    const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
-    let texto = document.createElement("span");
+    const texto = document.createElement("span");
     texto.textContent = input.value;
 
-    checkbox.onchange = function () {
-      if (checkbox.checked) {
-        texto.style.textDecoration = "line-through";
-        texto.style.opacity = "0.6";
-        texto.style.color = "red";
-      } else {
-        texto.style.textDecoration = "none";
-        texto.style.opacity = "1";
-        texto.style.color = "white";
-      }
-    };
+    checkbox.onchange = () => li.classList.toggle("checked");
 
-    li.appendChild(checkbox);
-    li.appendChild(texto);
+    const tag = document.createElement("small");
+    tag.textContent = periodoSelecionado;
+    tag.style.marginLeft = "10px";
+    tag.style.opacity = "0.6";
 
+    li.append(checkbox, texto, tag);
     lista.appendChild(li);
+
     input.value = "";
   };
-window.limpar = function () {
-  lista.innerHTML = "";
-};
 
-window.copiarLista = function () {
-  let itens = document.querySelectorAll("#lista li");
+  window.limpar = () => lista.innerHTML = "";
 
-  let textoFinal = "";
+  window.copiarLista = () => {
+    const itens = document.querySelectorAll("#lista li");
 
-  itens.forEach((item, index) => {
-    let texto = item.querySelector("span").textContent;
-    let checkbox = item.querySelector("input");
+    let textoFinal = "";
 
-    if (checkbox.checked) {
-      textoFinal += `${index + 1}. ~${texto}~\n`;
-    } else {
-      textoFinal += `${index + 1}. ${texto}\n`;
-    }
-  });
+    itens.forEach((item, i) => {
+      const texto = item.querySelector("span").textContent;
+      const checked = item.querySelector("input").checked;
 
-  navigator.clipboard.writeText(textoFinal)
-    .then(() => alert("Lista copiada!"))
-    .catch(() => alert("Erro ao copiar."));
-};
+      textoFinal += `${i + 1}. ${checked ? `~${texto}~` : texto}\n`;
+    });
+
+    navigator.clipboard.writeText(textoFinal)
+      .then(() => alert("Lista copiada!"))
+      .catch(() => alert("Erro ao copiar."));
+  };
 
 });
